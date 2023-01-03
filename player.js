@@ -6,33 +6,29 @@ const controller = new Controller()
 
 export class Player extends Sprites {
 
-    constructor({ context, dimension = { w: 0, h: 0 }, position = { x: 0, y: 0 }, velocity = { x: 0, y: 0 } }) {
-        super(context, dimension, position, velocity)
+    constructor({ 
+        context, 
+        dimension = { w: 0, h: 0 }, 
+        position = { x: 0, y: 0 }, 
+        offset, 
+        velocity = { x: 0, y: 0 }, 
+        imageSrc 
+    }) {
+        super({context, dimension, position, offset, velocity, imageSrc})
         if(!(context instanceof CanvasRenderingContext2D)){
             return new Error("Pass a CanvasRenderingContext2D object")
         }
 
+        this.dimension = dimension
+        this.velocity = velocity
         
-        this.animation = new Animation({ position, velocity })
     }
     
     update() {
-        this.draw()
+        // this.velocity.y = 10
+        super.update()
         
         controller.moveWhenKeyPressed(this)
-        this.animation.animate()
-
-        
-    
-        if((this.position.y + this.dimension.h) >= this.context.canvas.height) {
-            this.velocity.y = 0
-        }
-        
-        if (this.position.x < 0 ) {
-            this.position.x = 0
-        } else if((this.position.x + this.dimension.w) >= this.context.canvas.width){
-            this.position.x = this.context.canvas.width - this.dimension.w
-        }
     }
 }
 
