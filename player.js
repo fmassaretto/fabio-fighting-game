@@ -4,7 +4,6 @@ import { Sprites } from "./sprites.js"
 
 const controller = new Controller()
 
-
 export class Player extends Sprites {
 
     constructor({ context, dimension = { w: 0, h: 0 }, position = { x: 0, y: 0 }, velocity = { x: 0, y: 0 } }) {
@@ -20,9 +19,9 @@ export class Player extends Sprites {
     update() {
         this.draw()
         
+        controller.moveWhenKeyPressed(this)
         this.animation.animate()
 
-        controller.moveWhenKeyPressed(this)
         
     
         if((this.position.y + this.dimension.h) >= this.context.canvas.height) {
